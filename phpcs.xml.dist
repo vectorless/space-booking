@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="space_booking">
+    <description>Drupal coding standards for the Space Booking module.</description>
+
+    <file>.</file>
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <arg name="extensions" value="php,module,install,inc,yml,twig,css"/>
+    <arg name="colors"/>
+    <arg value="sp"/>
+
+    <rule ref="Drupal"/>
+    <rule ref="DrupalPractice"/>
+</ruleset>

@@ -1,0 +1,11 @@
+space_booking.space_add:
+  route_name: entity.space_booking_space.add_form
+  title: 'Add space'
+  appears_on:
+    - entity.space_booking_space.collection
+
+space_booking.booking_add:
+  route_name: entity.space_booking_booking.add_form
+  title: 'Add booking'
+  appears_on:
+    - entity.space_booking_booking.collection

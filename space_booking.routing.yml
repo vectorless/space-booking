@@ -1,0 +1,66 @@
+space_booking.schedule:
+  path: '/bookings'
+  defaults:
+    _controller: '\Drupal\space_booking\Controller\ScheduleController::grid'
+    _title: 'Schedule'
+  requirements:
+    _permission: 'view space schedule'
+
+space_booking.schedule_data:
+  path: '/bookings/data'
+  defaults:
+    _controller: '\Drupal\space_booking\Controller\ScheduleController::data'
+  requirements:
+    _permission: 'view space schedule'
+  options:
+    no_cache: TRUE
+
+space_booking.book:
+  path: '/bookings/book'
+  defaults:
+    _entity_form: 'space_booking_booking.add'
+    _title: 'Book a space'
+  requirements:
+    _permission: 'create space booking'
+
+space_booking.approvals:
+  path: '/admin/content/bookings/approvals'
+  defaults:
+    _controller: '\Drupal\space_booking\Controller\ApprovalController::queue'
+    _title: 'Booking requests'
+  requirements:
+    _permission: 'approve space bookings'
+
+space_booking.approve:
+  path: '/admin/content/bookings/{space_booking_booking}/approve'
+  defaults:
+    _form: '\Drupal\space_booking\Form\BookingDecisionForm'
+    _title: 'Approve booking'
+    decision: 'approve'
+  requirements:
+    _permission: 'approve space bookings'
+  options:
+    parameters:
+      space_booking_booking:
+        type: 'entity:space_booking_booking'
+
+space_booking.reject:
+  path: '/admin/content/bookings/{space_booking_booking}/reject'
+  defaults:
+    _form: '\Drupal\space_booking\Form\BookingDecisionForm'
+    _title: 'Reject booking'
+    decision: 'reject'
+  requirements:
+    _permission: 'approve space bookings'
+  options:
+    parameters:
+      space_booking_booking:
+        type: 'entity:space_booking_booking'
+
+space_booking.settings:
+  path: '/admin/config/content/space-booking'
+  defaults:
+    _form: '\Drupal\space_booking\Form\SettingsForm'
+    _title: 'Space booking'
+  requirements:
+    _permission: 'administer space booking'

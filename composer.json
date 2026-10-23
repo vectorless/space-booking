@@ -1,0 +1,19 @@
+{
+    "name": "vectorless/space_booking",
+    "description": "Book venue spaces against a time grid, with configurable rules and optional approval.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.3",
+        "drupal/core": "^11"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3",
+        "squizlabs/php_codesniffer": "^3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Drupal\\space_booking\\": "src/"
+        }
+    }
+}

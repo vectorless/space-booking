@@ -1,0 +1,56 @@
+space_booking.settings:
+  type: config_object
+  label: 'Space booking settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Booking enabled'
+    granularity_minutes:
+      type: integer
+      label: 'Slot size in minutes'
+    buffer_minutes:
+      type: integer
+      label: 'Gap between bookings in minutes'
+    min_duration_minutes:
+      type: integer
+      label: 'Minimum booking length in minutes'
+    max_duration_minutes:
+      type: integer
+      label: 'Maximum booking length in minutes'
+    min_advance_minutes:
+      type: integer
+      label: 'Minimum notice in minutes'
+    max_advance_days:
+      type: integer
+      label: 'Maximum days ahead'
+    quota_minutes_per_week:
+      type: integer
+      label: 'Weekly allowance per person in minutes'
+    notify_holder:
+      type: boolean
+      label: 'Email the holder'
+    notify_venue:
+      type: boolean
+      label: 'Email the venue'
+    venue_email:
+      type: email
+      label: 'Venue contact email'
+    schedule_days:
+      type: integer
+      label: 'Days shown on the schedule'
+    opening_hours:
+      type: sequence
+      label: 'Opening hours'
+      sequence:
+        type: mapping
+        label: 'Day'
+        mapping:
+          closed:
+            type: boolean
+            label: 'Closed'
+          open:
+            type: integer
+            label: 'Opens at, minutes since midnight'
+          close:
+            type: integer
+            label: 'Closes at, minutes since midnight'

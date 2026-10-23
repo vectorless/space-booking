@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Space types'
+vid: space_booking_type
+description: 'What kind of thing a space is: hall, studio, room, desk.'
+weight: 0

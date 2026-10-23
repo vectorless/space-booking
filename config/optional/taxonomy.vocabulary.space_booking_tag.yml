@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Space tags'
+vid: space_booking_tag
+description: 'Labels used to filter the schedule and to scope booking rules.'
+weight: 0

@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * The schedule: one row per day, one column per space.
+ *
+ * Available variables:
+ * - spaces: list of { id, label, bookable }.
+ * - rows: list of { date, timestamp, spaces: [{ id, bookings, book_url }] }.
+ */
+#}
+<table class="space-booking-grid">
+  <thead>
+    <tr>
+      <th>{{ 'Date'|t }}</th>
+      {% for space in spaces %}
+        <th>
+          {{ space.label }}
+          {% if not space.bookable %}
+            <span class="space-booking-grid__unbookable">({{ 'not bookable'|t }})</span>
+          {% endif %}
+        </th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+      <tr>
+        <td class="space-booking-grid__date">{{ row.date }}</td>
+        {% for cell in row.spaces %}
+          <td>
+            {% for booking in cell.bookings %}
+              <span class="space-booking-grid__booking space-booking-grid__booking--{{ booking.status }}">
+                {{ booking.from }}–{{ booking.to }}
+                {% if booking.url %}<a href="{{ booking.url }}">{{ booking.label }}</a>{% endif %}
+              </span>
+            {% endfor %}
+            {% if cell.book_url %}
+              <a class="space-booking-grid__book" href="{{ cell.book_url }}">{{ '+ Book'|t }}</a>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

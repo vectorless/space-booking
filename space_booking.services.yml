@@ -1,0 +1,23 @@
+services:
+  space_booking.availability:
+    class: Drupal\space_booking\AvailabilityChecker
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+
+  space_booking.manager:
+    class: Drupal\space_booking\BookingManager
+    arguments:
+      - '@entity_type.manager'
+      - '@config.factory'
+      - '@current_user'
+      - '@datetime.time'
+      - '@plugin.manager.mail'
+      - '@language_manager'
+
+  Drupal\space_booking\Hook\SpaceBookingHooks:
+    class: Drupal\space_booking\Hook\SpaceBookingHooks
+    arguments:
+      - '@date.formatter'
+    tags:
+      - { name: hooks }

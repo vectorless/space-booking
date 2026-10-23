@@ -1,0 +1,9 @@
+space_booking.bookings_collection:
+  title: 'Bookings'
+  route_name: entity.space_booking_booking.collection
+  base_route: entity.space_booking_booking.collection
+
+space_booking.approvals_tab:
+  title: 'Requests'
+  route_name: space_booking.approvals
+  base_route: entity.space_booking_booking.collection

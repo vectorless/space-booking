@@ -1,0 +1,23 @@
+administer space booking:
+  title: 'Administer space booking'
+  description: 'Configure the module, manage spaces and act on any booking.'
+  restrict access: TRUE
+
+view space schedule:
+  title: 'View the schedule'
+
+create space booking:
+  title: 'Book a space'
+
+edit own space bookings:
+  title: 'Edit own bookings'
+
+delete own space bookings:
+  title: 'Cancel own bookings'
+
+view any space booking:
+  title: 'View all bookings'
+  description: 'See the details of bookings held by other people.'
+
+approve space bookings:
+  title: 'Approve or reject booking requests'

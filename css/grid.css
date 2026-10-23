@@ -1,0 +1,45 @@
+/**
+ * @file
+ * The schedule grid: dates down, spaces across.
+ */
+
+.space-booking-grid {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.space-booking-grid th,
+.space-booking-grid td {
+  border: 1px solid #ccc;
+  padding: 0.4rem;
+  vertical-align: top;
+  min-width: 7rem;
+}
+
+.space-booking-grid__date {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.space-booking-grid__booking {
+  display: block;
+  margin-bottom: 0.2rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.85em;
+  background: #e8f0fe;
+}
+
+.space-booking-grid__booking--pending {
+  background: #fff4e5;
+  border: 1px dashed #c47f00;
+}
+
+.space-booking-grid__book {
+  font-size: 0.85em;
+}
+
+.space-booking-grid__unbookable {
+  color: #666;
+  font-style: italic;
+}

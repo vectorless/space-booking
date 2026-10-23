@@ -1,0 +1,11 @@
+space_booking.schedule:
+  title: 'Schedule'
+  description: 'See what is booked and reserve a space.'
+  route_name: space_booking.schedule
+  weight: 0
+
+space_booking.settings:
+  title: 'Space booking'
+  description: 'Slot sizes, opening hours and booking rules.'
+  route_name: space_booking.settings
+  parent: system.admin_config_content

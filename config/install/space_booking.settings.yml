@@ -1,0 +1,20 @@
+enabled: true
+granularity_minutes: 15
+buffer_minutes: 0
+min_duration_minutes: 30
+max_duration_minutes: 0
+min_advance_minutes: 0
+max_advance_days: 180
+quota_minutes_per_week: 0
+notify_holder: true
+notify_venue: false
+venue_email: ''
+schedule_days: 14
+opening_hours:
+  1: { closed: false, open: 540, close: 1320 }
+  2: { closed: false, open: 540, close: 1320 }
+  3: { closed: false, open: 540, close: 1320 }
+  4: { closed: false, open: 540, close: 1320 }
+  5: { closed: false, open: 540, close: 1320 }
+  6: { closed: false, open: 540, close: 1020 }
+  7: { closed: true, open: 0, close: 0 }

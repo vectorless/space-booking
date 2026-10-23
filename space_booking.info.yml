@@ -1,0 +1,11 @@
+name: 'Space Booking'
+type: module
+description: 'Book venue spaces (rooms, studios, halls, desks) against a time grid, with configurable booking rules and optional approval.'
+package: 'Booking'
+core_version_requirement: ^11
+configure: space_booking.settings
+dependencies:
+  - drupal:user
+  - drupal:options
+  - drupal:datetime
+  - drupal:taxonomy
