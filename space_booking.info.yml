@@ -3,6 +3,7 @@ type: module
 description: 'Book venue spaces (rooms, studios, halls, desks) against a time grid, with configurable booking rules and optional approval.'
 package: 'Booking'
 core_version_requirement: ^11
+php: 8.5
 configure: space_booking.settings
 dependencies:
   - drupal:user

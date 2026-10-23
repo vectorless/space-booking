@@ -130,7 +130,11 @@ final class AvailabilityChecker {
    *   Range end timestamp, exclusive.
    * @param int|null $ignoreBookingId
    *   A booking to exclude from the check.
+   *
+   * @return bool
+   *   TRUE when every space is free for the whole range.
    */
+  #[\NoDiscard('calling this and ignoring the answer would permit a double booking')]
   public function isAvailable(array $spaceIds, int $start, int $end, ?int $ignoreBookingId = NULL): bool {
     return $this->conflicts($spaceIds, $start, $end, $ignoreBookingId) === [];
   }

@@ -64,6 +64,7 @@ final class BookingManager {
    * @return bool
    *   TRUE when approved, FALSE when the slot is no longer free.
    */
+  #[\NoDiscard('a FALSE result means the slot has gone and the booking was not confirmed')]
   public function approve(BookingInterface $booking): bool {
     $availability = new AvailabilityChecker($this->entityTypeManager, $this->configFactory);
     if (!$availability->isAvailable($booking->getSpaceIds(), $booking->getStart(), $booking->getEnd(), (int) $booking->id())) {

@@ -3,7 +3,7 @@
 Book venue spaces — halls, studios, rooms, courts, desks — against a time grid,
 with configurable rules and optional approval.
 
-Drupal 11, PHP 8.3+. No dependencies beyond core.
+Drupal 11, PHP 8.5+. No dependencies beyond core.
 
 ## Why this exists
 
@@ -104,7 +104,7 @@ that an hour is taken without naming the person. That needs
 
 ## Tests
 
-97 tests, 1085 assertions.
+97 tests, 1085 assertions, verified on PHP 8.5.
 
 ```bash
 # Unit — pure logic, no bootstrap
