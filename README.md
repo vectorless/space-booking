@@ -5,6 +5,29 @@ with configurable rules and optional approval.
 
 Drupal 11, PHP 8.5+. No dependencies beyond core.
 
+## See it working
+
+**Booking a space.** The schedule, then one short form: space, date, start and end,
+a title, and optionally the activity the booking is for. Then the same hall at the
+same hour again — refused, with the reason.
+
+![Booking a space on the schedule](docs/schedule-and-booking.gif)
+
+**Adding a room, and mapping what it overlaps.** A new space with its own capacity
+and approval rule, mapped to the hall it physically sits inside. Booking the half is
+then refused because the whole hall is taken — nobody booked the half.
+
+![Adding a room and mapping its overlap](docs/add-and-map-a-room.gif)
+
+Both are recorded against a real site with 2,200 bookings already in it, not a
+staged fixture. Full-length 1440×900 MP4s are attached to the
+[latest release](../../releases/latest):
+
+| Download | Length | Covers |
+|---|---|---|
+| `schedule-and-booking.mp4` | 0:39 | the schedule, booking a space, linking it to an activity, a refused clash |
+| `feature-tour.mp4` | 1:38 | adding and mapping a room, the approval queue, adding a user, permissions, and the rules refusing a too-long booking and a closed day |
+
 ## Why this exists
 
 Most Drupal booking modules model *events you sign up to*. This one models
