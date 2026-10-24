@@ -70,10 +70,21 @@ final class BookingFlowTest extends BrowserTestBase {
 
   /**
    * Submit the booking form for a space.
+   *
+   * @param \Drupal\space_booking\SpaceInterface $space
+   *   The space to book.
+   * @param string $date
+   *   The date, as the form expects it.
+   * @param string $from
+   *   Start time.
+   * @param string $to
+   *   End time.
+   * @param array<string, string> $extra
+   *   Further form values, for fields only staff are shown.
    */
-  private function submitBooking(SpaceInterface $space, string $date, string $from, string $to): void {
+  private function submitBooking(SpaceInterface $space, string $date, string $from, string $to, array $extra = []): void {
     $this->drupalGet('/bookings/book');
-    $this->submitForm([
+    $this->submitForm($extra + [
       'spaces[target_id]' => sprintf('%s (%s)', $space->label(), $space->id()),
       'start[0][value][date]' => $date,
       'start[0][value][time]' => $from,
@@ -188,6 +199,59 @@ final class BookingFlowTest extends BrowserTestBase {
     $bookings = \Drupal::entityTypeManager()->getStorage('space_booking_booking')->loadMultiple();
     $booking = reset($bookings);
     $this->assertSame(BookingStatus::Pending, $booking->getStatus());
+  }
+
+  /**
+   * Staff are not held to the approval queue they themselves work.
+   *
+   * The status field is hidden from members, so their status is derived. An
+   * administrator is shown the field, and what they pick is what is saved.
+   */
+  public function testAdministratorKeepsTheStatusTheyChose(): void {
+    $space = $this->createSpace('Main Hall', ['requires_approval' => TRUE]);
+    $this->drupalLogin($this->drupalCreateUser([
+      'view space schedule',
+      'create space booking',
+      'administer space booking',
+    ]));
+
+    $this->submitBooking($space, $this->soon(), '10:00:00', '11:00:00', [
+      'status' => BookingStatus::Confirmed->value,
+    ]);
+
+    $this->assertSession()->pageTextContains('Your booking is confirmed.');
+
+    $bookings = \Drupal::entityTypeManager()->getStorage('space_booking_booking')->loadMultiple();
+    $booking = reset($bookings);
+    $this->assertSame(BookingStatus::Confirmed, $booking->getStatus(),
+      'An administrator who chose Confirmed should not have to approve their own booking.');
+  }
+
+  /**
+   * The choice is respected in the other direction too.
+   *
+   * Staff taking a request over the telephone can hold it as pending even in a
+   * space that would otherwise confirm straight away.
+   */
+  public function testAdministratorCanHoldAnyBookingAsPending(): void {
+    $space = $this->createSpace('Main Hall');
+    $this->drupalLogin($this->drupalCreateUser([
+      'view space schedule',
+      'create space booking',
+      'administer space booking',
+      'approve space bookings',
+    ]));
+
+    $this->submitBooking($space, $this->soon(), '10:00:00', '11:00:00', [
+      'status' => BookingStatus::Pending->value,
+    ]);
+
+    $bookings = \Drupal::entityTypeManager()->getStorage('space_booking_booking')->loadMultiple();
+    $booking = reset($bookings);
+    $this->assertSame(BookingStatus::Pending, $booking->getStatus());
+
+    $this->drupalGet('/admin/content/bookings/approvals');
+    $this->assertSession()->pageTextContains('Main Hall');
   }
 
   /**

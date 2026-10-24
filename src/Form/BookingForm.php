@@ -99,7 +99,13 @@ final class BookingForm extends ContentEntityForm {
       if ($booking->get('holder')->isEmpty()) {
         $booking->set('holder', $this->bookingManager->currentUserId());
       }
-      $booking->setStatus($this->bookingManager->initialStatus($booking));
+      // Someone who was never shown the status field cannot have chosen one,
+      // and a hidden field still submits its default, so derive the status for
+      // them. Where staff did see the field, their choice stands: they are the
+      // people who would otherwise be approving the request.
+      if (($form['status']['#access'] ?? TRUE) === FALSE) {
+        $booking->setStatus($this->bookingManager->initialStatus($booking));
+      }
     }
 
     $result = parent::save($form, $form_state);

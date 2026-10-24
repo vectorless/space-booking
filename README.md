@@ -104,7 +104,7 @@ that an hour is taken without naming the person. That needs
 
 ## Tests
 
-97 tests, 1085 assertions, verified on PHP 8.5.
+108 tests, 1277 assertions, verified on PHP 8.5.
 
 ```bash
 # Unit — pure logic, no bootstrap
