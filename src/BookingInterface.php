@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\space_booking;
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityChangedInterface;
 use Drupal\space_booking\Enum\BookingStatus;
 use Drupal\space_booking\Enum\BookingType;
@@ -68,6 +69,14 @@ interface BookingInterface extends ContentEntityInterface, EntityChangedInterfac
    * The person the booking is for, which is not always who created it.
    */
   public function getHolder(): ?UserInterface;
+
+  /**
+   * What this booking is for: the activity, class or event being held.
+   *
+   * NULL when the site does not link bookings to content, or when this
+   * booking is a plain room reservation with nothing behind it.
+   */
+  public function getSubject(): ?EntityInterface;
 
   /**
    * Whether this booking currently occupies its spaces.

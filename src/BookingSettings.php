@@ -36,6 +36,9 @@ final readonly class BookingSettings {
    *   How far ahead a booking may be made, in seconds. Zero means no limit.
    * @param int $quotaPerWeek
    *   Per-user weekly allowance, in seconds. Zero means unlimited.
+   * @param string $subjectEntityType
+   *   Entity type a booking may be "for" -- an activity, class or event on the
+   *   host site. Empty disables the link entirely.
    * @param array<int, array{open: int, close: int}|null> $openingHours
    *   Opening hours keyed by ISO weekday (1 = Monday). Minutes since midnight.
    *   A NULL value means closed that day.
@@ -49,6 +52,7 @@ final readonly class BookingSettings {
     public int $minAdvance = 0,
     public int $maxAdvance = 0,
     public int $quotaPerWeek = 0,
+    public string $subjectEntityType = 'node',
     public array $openingHours = [],
   ) {}
 
@@ -75,6 +79,9 @@ final readonly class BookingSettings {
       minAdvance: (int) ($config->get('min_advance_minutes') ?? 0) * 60,
       maxAdvance: (int) ($config->get('max_advance_days') ?? 0) * 86400,
       quotaPerWeek: (int) ($config->get('quota_minutes_per_week') ?? 0) * 60,
+      subjectEntityType: $config->get('subject_entity_type') === NULL
+        ? 'node'
+        : (string) $config->get('subject_entity_type'),
       openingHours: $hours,
     );
   }

@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Install and update routines for Space Booking.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
+/**
+ * Add the "for" reference so a booking can point at the activity it holds.
+ */
+function space_booking_update_10001(): string {
+  $config = \Drupal::configFactory()->getEditable('space_booking.settings');
+  if ($config->get('subject_entity_type') === NULL) {
+    $config->set('subject_entity_type', 'node')->save();
+  }
+
+  $subjectType = (string) $config->get('subject_entity_type');
+  if ($subjectType === '' || !\Drupal::entityTypeManager()->hasDefinition($subjectType)) {
+    return 'No subject entity type configured; nothing to install.';
+  }
+
+  $manager = \Drupal::entityDefinitionUpdateManager();
+  if ($manager->getFieldStorageDefinition('subject', 'space_booking_booking') !== NULL) {
+    return 'The booking subject field is already installed.';
+  }
+
+  $field = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(new TranslatableMarkup('For'))
+    ->setDescription(new TranslatableMarkup('The activity or event this booking is for.'))
+    ->setSetting('target_type', $subjectType)
+    ->setDisplayOptions('form', ['type' => 'entity_reference_autocomplete', 'weight' => 8])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  $manager->installFieldStorageDefinition('subject', 'space_booking_booking', 'space_booking', $field);
+
+  return sprintf('Installed the booking subject field, pointing at %s.', $subjectType);
+}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\space_booking;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\space_booking\Enum\BookingStatus;
 
@@ -171,6 +172,52 @@ final class AvailabilityChecker {
 
     $bookings = [];
     foreach ($storage->loadMultiple($ids) as $booking) {
+      \assert($booking instanceof BookingInterface);
+      $bookings[(int) $booking->id()] = $booking;
+    }
+    return $bookings;
+  }
+
+  /**
+   * Bookings held for a given activity, soonest first.
+   *
+   * This is what lets an activity page show its own dates without storing
+   * them: the words live on the activity, the times live here, and neither
+   * copy of the truth can drift from the other because there is only one.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface $subject
+   *   The activity, class or event.
+   * @param int|null $from
+   *   Only return bookings ending after this timestamp. NULL for all.
+   * @param int $limit
+   *   Maximum number to return. Zero for no limit.
+   *
+   * @return array<int, \Drupal\space_booking\BookingInterface>
+   *   Bookings keyed by ID.
+   */
+  public function bookingsForSubject(EntityInterface $subject, ?int $from = NULL, int $limit = 0): array {
+    // The field only exists when the site links bookings to content, so a
+    // site that does not gets an empty list rather than a query error.
+    if ($this->settings()->subjectEntityType === '') {
+      return [];
+    }
+
+    $storage = $this->entityTypeManager->getStorage('space_booking_booking');
+    $query = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('subject', $subject->id())
+      ->condition('status', BookingStatus::occupyingValues(), 'IN')
+      ->sort('start');
+
+    if ($from !== NULL) {
+      $query->condition('end', $from, '>');
+    }
+    if ($limit > 0) {
+      $query->range(0, $limit);
+    }
+
+    $bookings = [];
+    foreach ($storage->loadMultiple($query->execute()) as $booking) {
       \assert($booking instanceof BookingInterface);
       $bookings[(int) $booking->id()] = $booking;
     }

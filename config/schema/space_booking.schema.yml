@@ -38,6 +38,9 @@ space_booking.settings:
     schedule_days:
       type: integer
       label: 'Days shown on the schedule'
+    subject_entity_type:
+      type: string
+      label: 'Entity type a booking can be for'
     opening_hours:
       type: sequence
       label: 'Opening hours'

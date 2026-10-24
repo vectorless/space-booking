@@ -10,6 +10,7 @@ notify_holder: true
 notify_venue: false
 venue_email: ''
 schedule_days: 14
+subject_entity_type: node
 opening_hours:
   1: { closed: false, open: 540, close: 1320 }
   2: { closed: false, open: 540, close: 1320 }

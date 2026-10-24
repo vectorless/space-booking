@@ -8,6 +8,7 @@ use Drupal\Core\Entity\Attribute\ContentEntityType;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityDeleteForm;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -140,6 +141,17 @@ final class Booking extends ContentEntityBase implements BookingInterface {
   /**
    * {@inheritdoc}
    */
+  public function getSubject(): ?EntityInterface {
+    if (!$this->hasField('subject')) {
+      return NULL;
+    }
+    $subject = $this->get('subject')->entity;
+    return $subject instanceof EntityInterface ? $subject : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getHolder(): ?UserInterface {
     $holder = $this->get('holder')->entity;
     return $holder instanceof UserInterface ? $holder : NULL;
@@ -168,6 +180,10 @@ final class Booking extends ContentEntityBase implements BookingInterface {
     $title = (string) $this->get('title')->value;
     if ($title !== '') {
       return $title;
+    }
+    $subject = $this->getSubject();
+    if ($subject !== NULL) {
+      return (string) $subject->label();
     }
     $holder = $this->getHolder();
     return $holder?->getDisplayName() ?? (string) $this->getType()->label();
@@ -242,6 +258,30 @@ final class Booking extends ContentEntityBase implements BookingInterface {
       ->setDisplayOptions('form', ['type' => 'string_textfield', 'weight' => 6])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
+
+    // What the booking is *for*: a class, activity or event described
+    // elsewhere on the site. The venue owns the room and the hour; whoever
+    // runs the activity owns the words. Keeping them in separate entities is
+    // what lets both be true without either overwriting the other.
+    //
+    // Optional, and only defined when the configured entity type exists, so
+    // the module still installs on a site without it.
+    // Default in code as well as in config: base fields are built while the
+    // entity schema is installed, which can happen before this module's
+    // config exists. Reading only from config made the field vanish from the
+    // schema depending on install order. An explicit empty string still
+    // switches the link off.
+    $configured = \Drupal::config('space_booking.settings')->get('subject_entity_type');
+    $subjectType = $configured === NULL ? 'node' : (string) $configured;
+    if ($subjectType !== '' && \Drupal::entityTypeManager()->hasDefinition($subjectType)) {
+      $fields['subject'] = BaseFieldDefinition::create('entity_reference')
+        ->setLabel(new TranslatableMarkup('For'))
+        ->setDescription(new TranslatableMarkup('The activity or event this booking is for. Its description is edited where it lives; only the time is set here.'))
+        ->setSetting('target_type', $subjectType)
+        ->setDisplayOptions('form', ['type' => 'entity_reference_autocomplete', 'weight' => 8])
+        ->setDisplayConfigurable('form', TRUE)
+        ->setDisplayConfigurable('view', TRUE);
+    }
 
     $fields['notes'] = BaseFieldDefinition::create('string_long')
       ->setLabel(new TranslatableMarkup('Notes'))
