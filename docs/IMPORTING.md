@@ -9,6 +9,12 @@ plus four process plugins, which means you get rollback, re-running, per-row
 error reporting and a documented way to change the mapping — none of which a
 hand-written importer would have given you.
 
+> The same module is published on its own at
+> **[space-booking-csv-import-example](https://github.com/vectorless/space-booking-csv-import-example)**,
+> for people adapting it to a system that is not Skedda. That copy's README is
+> written as a template guide; this page is the one to read if you are
+> importing from Skedda into this project.
+
 ## What you need
 
 ```bash
