@@ -37,6 +37,13 @@ Full-length 1600×900 MP4s are attached to the
 |---|---|---|
 | `schedule-and-booking.mp4` | 0:36 | the schedule, booking a space, linking it to a piece of content, a refused clash |
 | `feature-tour.mp4` | 1:38 | adding and mapping a room, adding a user, permissions, a member's request and its approval, and the rules refusing a too-long booking and a closed day |
+| `tutorial.mp4` | 2:27 | the whole setup from an empty install: rooms, overlaps, hours, rules, permissions, a member booking, an approval, a maintenance closure, and what gets refused |
+
+## Setting up a venue
+
+**[docs/TUTORIAL.md](docs/TUTORIAL.md)** is the written version of that last
+one: a bare install through to a working booking system, with every setting and
+permission explained, and the five refusals and their messages.
 
 ## Why this exists
 
