@@ -7,26 +7,36 @@ Drupal 11, PHP 8.5+. No dependencies beyond core.
 
 ## See it working
 
-**Booking a space.** The schedule, then one short form: space, date, start and end,
-a title, and optionally the activity the booking is for. Then the same hall at the
-same hour again — refused, with the reason.
+Everything below is a plain `drupal/recommended-project` install — standard
+profile, Olivero and Claro, `drush en space_booking`, nothing else added and
+nothing themed. What you see is what the module gives you.
 
-![Booking a space on the schedule](docs/schedule-and-booking.gif)
+**Booking a space.** The schedule, then one short form: space, date, start and
+end, a title, and optionally the content the booking is for. Then the same room
+at the same hour again — refused, with the reason.
 
-**Adding a room, and mapping what it overlaps.** A new space with its own capacity
-and approval rule, mapped to the hall it physically sits inside. Booking the half is
-then refused because the whole hall is taken — nobody booked the half.
+![Booking a space on the schedule](docs/booking-a-space.gif)
 
-![Adding a room and mapping its overlap](docs/add-and-map-a-room.gif)
+**Adding a room, and mapping what it overlaps.** A new space with its own
+capacity and approval rule, mapped to the hall it physically sits inside.
+Booking the Stage End is then refused because the hall around it is taken —
+nobody ever booked the Stage End.
 
-Both are recorded against a real site with 2,200 bookings already in it, not a
-staged fixture. Full-length 1440×900 MP4s are attached to the
+![Adding a room and mapping its overlap](docs/adding-a-room.gif)
+
+**Requesting a room that needs approval.** A member's form has no status, type
+or holder: those are staff fields, so the module decides. Her booking is held as
+a request — which already blocks the slot — and staff approve it from the queue.
+
+![A member requests a room and staff approve it](docs/approval-queue.gif)
+
+Full-length 1600×900 MP4s are attached to the
 [latest release](../../releases/latest):
 
 | Download | Length | Covers |
 |---|---|---|
-| `schedule-and-booking.mp4` | 0:39 | the schedule, booking a space, linking it to an activity, a refused clash |
-| `feature-tour.mp4` | 1:38 | adding and mapping a room, the approval queue, adding a user, permissions, and the rules refusing a too-long booking and a closed day |
+| `schedule-and-booking.mp4` | 0:36 | the schedule, booking a space, linking it to a piece of content, a refused clash |
+| `feature-tour.mp4` | 1:38 | adding and mapping a room, adding a user, permissions, a member's request and its approval, and the rules refusing a too-long booking and a closed day |
 
 ## Why this exists
 
