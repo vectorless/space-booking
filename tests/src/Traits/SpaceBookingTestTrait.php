@@ -45,9 +45,24 @@ trait SpaceBookingTestTrait {
    * A timestamp for a local wall-clock time.
    *
    * Tests should say "Tuesday at ten", not juggle epoch seconds.
+   *
+   * Weekday fixtures are anchored on a Monday rather than on today, because
+   * PHP reads "+1 Tuesday" on a Tuesday as *this* Tuesday: run the suite on a
+   * Tuesday afternoon and every future fixture quietly becomes a past one.
+   * Counting forward from next Monday, or back from last Monday, keeps each
+   * fixture on the side of now that the test meant.
    */
   protected function at(string $local): int {
-    return (new \DateTimeImmutable($local, new \DateTimeZone($this->venueTimezone)))->getTimestamp();
+    $zone = new \DateTimeZone($this->venueTimezone);
+
+    // Only weekday fixtures: "+2 hours" and "+30 days" mean exactly what they
+    // say and must stay relative to now.
+    if (preg_match('/^([-+])\d+ (?:mon|tue|wed|thu|fri|sat|sun)/i', $local, $matches) === 1) {
+      $anchor = $matches[1] === '+' ? 'next Monday 00:00' : 'last Monday 00:00';
+      return (new \DateTimeImmutable($anchor, $zone))->modify($local)->getTimestamp();
+    }
+
+    return (new \DateTimeImmutable($local, $zone))->getTimestamp();
   }
 
   /**

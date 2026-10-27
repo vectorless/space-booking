@@ -46,6 +46,18 @@ version, so they keep working after the next tag:
 one: a bare install through to a working booking system, with every setting and
 permission explained, and the five refusals and their messages.
 
+## Moving a venue in from somewhere else
+
+**[docs/IMPORTING.md](docs/IMPORTING.md)** covers the optional
+`space_booking_skedda` submodule, which reads a Skedda CSV export and creates
+the rooms and bookings. It is two ordinary Migrate API migrations and four
+process plugins rather than a bespoke importer, so it rolls back, re-runs
+without duplicating, reports each refused row, and can be copied and edited to
+read an export from any other system.
+
+Every row is checked against the booking rules on the way in, so an import
+cannot create a clash the booking form would have refused.
+
 ## Why this exists
 
 Most Drupal booking modules model *events you sign up to*. This one models
