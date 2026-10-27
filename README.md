@@ -30,14 +30,15 @@ a request — which already blocks the slot — and staff approve it from the qu
 
 ![A member requests a room and staff approve it](docs/approval-queue.gif)
 
-Full-length 1600×900 MP4s are attached to the
-[latest release](../../releases/latest):
+Full-length 1600×900 MP4s, captioned, from the
+[latest release](../../releases/latest) — the links always point at the newest
+version, so they keep working after the next tag:
 
 | Download | Length | Covers |
 |---|---|---|
-| `schedule-and-booking.mp4` | 0:36 | the schedule, booking a space, linking it to a piece of content, a refused clash |
-| `feature-tour.mp4` | 1:38 | adding and mapping a room, adding a user, permissions, a member's request and its approval, and the rules refusing a too-long booking and a closed day |
-| `tutorial.mp4` | 2:27 | the whole setup from an empty install: rooms, overlaps, hours, rules, permissions, a member booking, an approval, a maintenance closure, and what gets refused |
+| [schedule-and-booking.mp4](../../releases/latest/download/schedule-and-booking.mp4) | 0:36 | the schedule, booking a space, linking it to a piece of content, a refused clash |
+| [feature-tour.mp4](../../releases/latest/download/feature-tour.mp4) | 1:38 | adding and mapping a room, adding a user, permissions, a member's request and its approval, and the rules refusing a too-long booking and a closed day |
+| [tutorial.mp4](../../releases/latest/download/tutorial.mp4) | 2:27 | the whole setup from an empty install: rooms, overlaps, hours, rules, permissions, a member booking, an approval, a maintenance closure, and what gets refused |
 
 ## Setting up a venue
 
